@@ -36,6 +36,11 @@ public class User {
   private String phoneNumber;
 
   /**
+   * The user's login Json Web Token.
+   */
+  private String token;
+
+  /**
    * The user's encrypted password. Stored as a hashed string using BCrypt.
    */
   private String password;
@@ -71,5 +76,13 @@ public class User {
 
   public void setPassword(String password) {
     this.password = password;
+  }
+
+  public String getToken() {
+    return token;
+  }
+
+  public void setToken(String token) {
+    this.token = token;
   }
 }
