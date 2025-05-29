@@ -80,7 +80,7 @@ public class ResponseGenerator {
     public ResponseEntity<Object> build() {
 
       Map<String, Object> responseBody = new LinkedHashMap<>();
-      responseBody.put("status", this.statusCode);
+      responseBody.put("status", this.statusCode.getCode());
       responseBody.put("message", this.customMessage != null ? this.customMessage : this.statusCode.getReason());
       responseBody.put("data", this.body);
 
