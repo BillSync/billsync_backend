@@ -56,8 +56,17 @@ public class UserController {
     return ResponseEntity.ok(user);
   }
 
+  /**
+   * Endpoint for user login.
+   * <p>
+   * Accepts a validated request body and delegates to the service for processing.
+   * </p>
+   *
+   * @param request the validated sign-in request containing email or phone, and password
+   * @return a {@link ResponseEntity} containing the generated jwt.
+   */
   @PostMapping("/login")
-  public ResponseEntity<SignInResponse> login(@Valid @RequestBody SignInRequest request) throws UserSignInException {
+  public ResponseEntity<SignInResponse> login(@Valid @RequestBody SignInRequest request) throws BillSyncException {
     SignInResponse response = userService.SignInUser(request);
     return ResponseEntity.ok(response);
   }
