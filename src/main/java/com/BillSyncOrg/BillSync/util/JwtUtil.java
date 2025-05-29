@@ -1,5 +1,7 @@
 package com.BillSyncOrg.BillSync.util;
 
+import com.BillSyncOrg.BillSync.exceptions.BillSyncServerException;
+import com.BillSyncOrg.BillSync.exceptions.JWTException;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
 import io.jsonwebtoken.security.Keys;
@@ -30,13 +32,18 @@ public class JwtUtil {
    *
    * @param userId the MongoDB user ID to embed in the token
    * @return a JWT string signed with the configured secret key
+   * @throws JWTException the exception while generating the jwt
    */
-  public String generateToken(String userId) {
-    return Jwts.builder()
-      .setSubject(userId)
-      .setIssuedAt(new Date())
-      .setExpiration(new Date(System.currentTimeMillis() + 1000L * 60 * 60 * 24 * 30)) // 30 days
-      .signWith(Keys.hmacShaKeyFor(secretKey.getBytes()), SignatureAlgorithm.HS256)
-      .compact();
+  public String generateToken(String userId) throws JWTException {
+    try {
+      return Jwts.builder()
+        .setSubject(userId)
+        .setIssuedAt(new Date())
+        .setExpiration(new Date(System.currentTimeMillis() + 1000L * 60 * 60 * 24 * 30)) // 30 days
+        .signWith(Keys.hmacShaKeyFor(secretKey.getBytes()), SignatureAlgorithm.HS256)
+        .compact();
+    } catch (Exception e) {
+      throw new JWTException("Error generating jwt!", e, HttpStatusCodeEnum.INTERNAL_SERVER_ERROR);
+    }
   }
 }

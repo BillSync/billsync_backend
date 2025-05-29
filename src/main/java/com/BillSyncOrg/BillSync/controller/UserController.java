@@ -3,9 +3,8 @@ package com.BillSyncOrg.BillSync.controller;
 import com.BillSyncOrg.BillSync.dto.SignInRequest;
 import com.BillSyncOrg.BillSync.dto.SignInResponse;
 import com.BillSyncOrg.BillSync.dto.SignupRequest;
-import com.BillSyncOrg.BillSync.exceptions.BillSyncException;
-import com.BillSyncOrg.BillSync.exceptions.UserSignInException;
-import com.BillSyncOrg.BillSync.exceptions.UserSignupException;
+import com.BillSyncOrg.BillSync.exceptions.BillSyncClientException;
+import com.BillSyncOrg.BillSync.exceptions.BillSyncServerException;
 import com.BillSyncOrg.BillSync.model.User;
 import com.BillSyncOrg.BillSync.service.UserService;
 import jakarta.validation.Valid;
@@ -51,7 +50,7 @@ public class UserController {
    * @return a {@link ResponseEntity} containing the created user
    */
   @PostMapping("/signup")
-  public ResponseEntity<User> signUp(@Valid @RequestBody SignupRequest request) throws BillSyncException {
+  public ResponseEntity<User> signUp(@Valid @RequestBody SignupRequest request) throws BillSyncClientException, BillSyncServerException {
     User user = userService.registerUser(request);
     return ResponseEntity.ok(user);
   }
@@ -66,7 +65,7 @@ public class UserController {
    * @return a {@link ResponseEntity} containing the generated jwt.
    */
   @PostMapping("/login")
-  public ResponseEntity<SignInResponse> login(@Valid @RequestBody SignInRequest request) throws BillSyncException {
+  public ResponseEntity<SignInResponse> login(@Valid @RequestBody SignInRequest request) throws BillSyncClientException, BillSyncServerException {
     SignInResponse response = userService.SignInUser(request);
     return ResponseEntity.ok(response);
   }
