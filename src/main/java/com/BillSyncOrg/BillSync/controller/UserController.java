@@ -7,6 +7,8 @@ import com.BillSyncOrg.BillSync.exceptions.BillSyncClientException;
 import com.BillSyncOrg.BillSync.exceptions.BillSyncServerException;
 import com.BillSyncOrg.BillSync.model.User;
 import com.BillSyncOrg.BillSync.service.UserService;
+import com.BillSyncOrg.BillSync.util.HttpStatusCodeEnum;
+import com.BillSyncOrg.BillSync.util.ResponseGenerator;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -50,9 +52,9 @@ public class UserController {
    * @return a {@link ResponseEntity} containing the created user
    */
   @PostMapping("/signup")
-  public ResponseEntity<User> signUp(@Valid @RequestBody SignupRequest request) throws BillSyncClientException, BillSyncServerException {
+  public ResponseEntity<Object> signUp(@Valid @RequestBody SignupRequest request) throws BillSyncClientException, BillSyncServerException {
     User user = userService.registerUser(request);
-    return ResponseEntity.ok(user);
+    return ResponseGenerator.builder().body(user).status(HttpStatusCodeEnum.CREATED).message("Account created succesfully!").build();
   }
 
   /**
@@ -65,8 +67,8 @@ public class UserController {
    * @return a {@link ResponseEntity} containing the generated jwt.
    */
   @PostMapping("/login")
-  public ResponseEntity<SignInResponse> login(@Valid @RequestBody SignInRequest request) throws BillSyncClientException, BillSyncServerException {
+  public ResponseEntity<Object> login(@Valid @RequestBody SignInRequest request) throws BillSyncClientException, BillSyncServerException {
     SignInResponse response = userService.SignInUser(request);
-    return ResponseEntity.ok(response);
+    return ResponseGenerator.builder().body(response).status(HttpStatusCodeEnum.OK).message("Login succesfully!").build();
   }
 }

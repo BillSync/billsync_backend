@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Objects;
 
 import com.BillSyncOrg.BillSync.exceptions.BillSyncClientException;
 
@@ -31,10 +32,10 @@ public class GlobalExceptionHandler {
    * @return a structured error response with HTTP 400 status
    */
   @ExceptionHandler(BillSyncClientException.class)
-  public ResponseEntity<Map<String, String>> handleBillSyncException(BillSyncClientException ex) {
+  public ResponseEntity<Object> handleBillSyncException(BillSyncClientException ex) {
     Map<String, String> error = new HashMap<>();
     error.put("error", ex.getMessage());
-    return new ResponseEntity<>(error, HttpStatusCode.valueOf(ex.getHttpStatusCode().getCode()));
+    return ResponseGenerator.builder().message(ex.getMessage()).status(ex.getHttpStatusCode()).build();
   }
 
   /**
@@ -44,10 +45,10 @@ public class GlobalExceptionHandler {
    * @return a structured error response with HTTP 400 status
    */
   @ExceptionHandler(BillSyncServerException.class)
-  public ResponseEntity<Map<String, String>> handleBillSyncServerException(BillSyncServerException ex) {
+  public ResponseEntity<Object> handleBillSyncServerException(BillSyncServerException ex) {
     Map<String, String> error = new HashMap<>();
     error.put("error", ex.getMessage());
-    return new ResponseEntity<>(error, HttpStatusCode.valueOf(ex.getHttpStatusCode().getCode()));
+    return ResponseGenerator.builder().message(ex.getMessage()).status(ex.getHttpStatusCode()).build();
   }
 
   /**
@@ -57,11 +58,11 @@ public class GlobalExceptionHandler {
    * @return a map of field-specific error messages with HTTP 400 status
    */
   @ExceptionHandler(MethodArgumentNotValidException.class)
-  public ResponseEntity<Map<String, String>> handleValidationException(MethodArgumentNotValidException ex) {
+  public ResponseEntity<Object> handleValidationException(MethodArgumentNotValidException ex) {
     Map<String, String> errors = new HashMap<>();
     ex.getBindingResult().getFieldErrors().forEach(err ->
       errors.put(err.getField(), err.getDefaultMessage())
     );
-    return new ResponseEntity<>(errors, HttpStatusCode.valueOf(HttpStatusCodeEnum.BAD_REQUEST.getCode()));
+    return ResponseGenerator.builder().body(errors).message(errors.toString()).status(HttpStatusCodeEnum.BAD_REQUEST).build();
   }
 }
