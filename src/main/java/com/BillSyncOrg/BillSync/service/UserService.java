@@ -1,6 +1,10 @@
 package com.BillSyncOrg.BillSync.service;
 
 
+import com.BillSyncOrg.BillSync.dto.SignInRequest;
+import com.BillSyncOrg.BillSync.dto.SignInResponse;
+import com.BillSyncOrg.BillSync.exceptions.UserSignInException;
+import com.BillSyncOrg.BillSync.util.JwtUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -27,15 +31,18 @@ public class UserService {
   private final UserRepository userRepository;
   private final BCryptPasswordEncoder passwordEncoder;
 
+  private final JwtUtil jwtUtil;
+
   /**
    * Constructs the service with required dependencies.
    *
    * @param userRepository the repository used to persist and fetch user data
    */
   @Autowired
-  public UserService(UserRepository userRepository) {
+  public UserService(UserRepository userRepository, JwtUtil jwtUtil) {
     this.userRepository = userRepository;
     this.passwordEncoder = new BCryptPasswordEncoder();
+    this.jwtUtil = jwtUtil;
   }
 
   /**
@@ -64,5 +71,35 @@ public class UserService {
     user.setPassword(passwordEncoder.encode(request.getPassword()));
 
     return userRepository.save(user);
+  }
+
+  /**
+   * Authenticates a user using either email or phone number and issues a JWT on success.
+   * @param SignInRequest the login credentials provided by the user
+   * @return a {@link SignInResponse} containing the generated JWT
+   * @throws UserSignInException if no matching user is found or if the password is incorrect
+   */
+  public SignInResponse SignInUser(SignInRequest SignInRequest) throws UserSignInException {
+    String password = SignInRequest.getPassword();
+
+    User user;
+
+    if (SignInRequest.getEmail() != null && !SignInRequest.getEmail().isBlank()) {
+      user = userRepository.findByEmail(SignInRequest.getEmail())
+        .orElseThrow(() -> new UserSignInException("Invalid email/phone or password!"));
+    } else {
+      user = userRepository.findByPhoneNumber(SignInRequest.getPhoneNumber())
+        .orElseThrow(() -> new UserSignInException("Invalid email/phone or password!"));
+    }
+
+    if (!passwordEncoder.matches(password, user.getPassword())) {
+      throw new UserSignInException("Invalid email/phone or password!");
+    }
+
+    String token = jwtUtil.generateToken(user.getId());
+    user.setToken(token); // Store JWT in the user's record
+    userRepository.save(user); // Update user with new token
+
+    return new SignInResponse(token);
   }
 }
