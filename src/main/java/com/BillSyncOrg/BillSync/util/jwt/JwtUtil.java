@@ -1,7 +1,9 @@
-package com.BillSyncOrg.BillSync.util;
+package com.BillSyncOrg.BillSync.util.jwt;
 
 import com.BillSyncOrg.BillSync.exceptions.BillSyncServerException;
 import com.BillSyncOrg.BillSync.exceptions.JWTException;
+import com.BillSyncOrg.BillSync.util.HttpStatusCodeEnum;
+import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
 import io.jsonwebtoken.security.Keys;
@@ -44,6 +46,33 @@ public class JwtUtil {
         .compact();
     } catch (Exception e) {
       throw new JWTException("Error generating jwt!", e, HttpStatusCodeEnum.INTERNAL_SERVER_ERROR);
+    }
+  }
+
+  /**
+   * Extracts all claims (payload) from the JWT token.
+   *
+   * @param token the JWT token string.
+   * @return the extracted claims.
+   */
+  public Claims extractAllClaims(String token) {
+    return Jwts.parser()
+      .setSigningKey(secretKey.getBytes())
+      .parseClaimsJws(token)
+      .getBody();
+  }
+
+  /**
+   * Extracts the userId embedded in the JWT token.
+   *
+   * @param token the JWT token string.
+   * @return the userId if present.
+   */
+  public String extractUserId(String token) {
+    try {
+      return extractAllClaims(token).getSubject();
+    } catch (Exception e) {
+      return null;
     }
   }
 }
