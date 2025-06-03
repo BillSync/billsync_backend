@@ -1,5 +1,6 @@
 package com.BillSyncOrg.BillSync.controller;
 
+import com.BillSyncOrg.BillSync.context.RequestContext;
 import com.BillSyncOrg.BillSync.dto.SignInRequest;
 import com.BillSyncOrg.BillSync.dto.SignInResponse;
 import com.BillSyncOrg.BillSync.dto.SignupRequest;
@@ -9,13 +10,13 @@ import com.BillSyncOrg.BillSync.model.User;
 import com.BillSyncOrg.BillSync.service.UserService;
 import com.BillSyncOrg.BillSync.util.HttpStatusCodeEnum;
 import com.BillSyncOrg.BillSync.util.ResponseGenerator;
+import jakarta.servlet.http.HttpServletRequest;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.web.bind.annotation.*;
 
 /**
  * REST controller for exposing user-related API endpoints.
@@ -54,7 +55,7 @@ public class UserController {
   @PostMapping("/signup")
   public ResponseEntity<Object> signUp(@Valid @RequestBody SignupRequest request) throws BillSyncClientException, BillSyncServerException {
     User user = userService.registerUser(request);
-    return ResponseGenerator.builder().body(user).status(HttpStatusCodeEnum.CREATED).message("Account created succesfully!").build();
+    return ResponseGenerator.builder().body(user).status(HttpStatusCodeEnum.CREATED).message("Account created successfully!").build();
   }
 
   /**
@@ -69,6 +70,29 @@ public class UserController {
   @PostMapping("/login")
   public ResponseEntity<Object> login(@Valid @RequestBody SignInRequest request) throws BillSyncClientException, BillSyncServerException {
     SignInResponse response = userService.SignInUser(request);
-    return ResponseGenerator.builder().body(response).status(HttpStatusCodeEnum.OK).message("Login succesfully!").build();
+    return ResponseGenerator.builder().body(response).status(HttpStatusCodeEnum.OK).message("Login successfully!").build();
+  }
+
+  /**
+   * Logs out the user by blacklisting the JWT token provided in the Authorization header.
+   *
+   * @param request the HTTP request containing the token.
+   * @return a ResponseEntity indicating logout success or failure.
+   */
+  @PostMapping("/logout")
+  public ResponseEntity<Object> logout(HttpServletRequest request) throws BillSyncServerException {
+    userService.logoutUser(request);
+    return ResponseGenerator.builder().status(HttpStatusCodeEnum.OK).message("Logout " +
+      "successfully!").build();
+  }
+
+  /**
+   * Provides the userId for the logged-in user.
+   *
+   * @return a ResponseEntity containing the userId.
+   */
+  @GetMapping("/me")
+  public ResponseEntity<Object> getMyUserId() {
+    return ResponseGenerator.builder().body(RequestContext.getUserId()).status(HttpStatusCodeEnum.OK).message("successfully!").build();
   }
 }

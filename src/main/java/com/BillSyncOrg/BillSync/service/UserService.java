@@ -1,11 +1,15 @@
 package com.BillSyncOrg.BillSync.service;
 
 
+import com.BillSyncOrg.BillSync.context.RequestContext;
 import com.BillSyncOrg.BillSync.dto.SignInRequest;
 import com.BillSyncOrg.BillSync.dto.SignInResponse;
 import com.BillSyncOrg.BillSync.exceptions.*;
+import com.BillSyncOrg.BillSync.model.BlacklistedToken;
+import com.BillSyncOrg.BillSync.repository.BlacklistedTokenRepository;
 import com.BillSyncOrg.BillSync.util.HttpStatusCodeEnum;
-import com.BillSyncOrg.BillSync.util.JwtUtil;
+import com.BillSyncOrg.BillSync.util.jwt.JwtUtil;
+import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -30,7 +34,7 @@ public class UserService {
 
   private final UserRepository userRepository;
   private final BCryptPasswordEncoder passwordEncoder;
-
+  private final BlacklistedTokenRepository blacklistRepo;
   private final JwtUtil jwtUtil;
 
   /**
@@ -39,8 +43,9 @@ public class UserService {
    * @param userRepository the repository used to persist and fetch user data
    */
   @Autowired
-  public UserService(UserRepository userRepository, JwtUtil jwtUtil) {
+  public UserService(UserRepository userRepository, JwtUtil jwtUtil, BlacklistedTokenRepository blacklistRepo) {
     this.userRepository = userRepository;
+    this.blacklistRepo = blacklistRepo;
     this.passwordEncoder = new BCryptPasswordEncoder();
     this.jwtUtil = jwtUtil;
   }
@@ -105,7 +110,6 @@ public class UserService {
       }
 
       String token = jwtUtil.generateToken(user.getId());
-      user.setToken(token); // Store JWT in the user's record
       userRepository.save(user); // Update user with new token
 
       return new SignInResponse(token);
@@ -115,6 +119,29 @@ public class UserService {
       throw new BillSyncServerException(e.getMessage(), e.getHttpStatusCode());
     } catch (Exception e) {
       throw new BillSyncServerException("Error while user login!", e, HttpStatusCodeEnum.INTERNAL_SERVER_ERROR);
+    }
+  }
+
+  /**
+   * Logs out the user by blacklisting their JWT token.
+   *
+   * @param request the httpRequest to get header values.
+   * @throws BillSyncServerException if token or userId is missing.
+   */
+  public void logoutUser(HttpServletRequest request) throws BillSyncServerException {
+    try {
+      String authHeader = request.getHeader("Authorization");
+      String token = authHeader != null && authHeader.startsWith("Bearer ") ? authHeader.substring(7) : null;
+      String userId = RequestContext.getUserId();
+
+      if (userId == null || token == null) {
+        throw new JWTException("Token is missing.", HttpStatusCodeEnum.UNAUTHORIZED);
+      }
+
+      BlacklistedToken blacklistedToken = new BlacklistedToken(token);
+      blacklistRepo.save(blacklistedToken);
+    } catch (JWTException e) {
+      throw new BillSyncServerException(e.getMessage(), e.getHttpStatusCode());
     }
   }
 }
