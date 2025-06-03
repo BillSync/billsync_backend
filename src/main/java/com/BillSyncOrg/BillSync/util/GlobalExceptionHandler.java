@@ -1,14 +1,13 @@
 package com.BillSyncOrg.BillSync.util;
 
 import com.BillSyncOrg.BillSync.exceptions.BillSyncServerException;
-import org.springframework.http.HttpStatusCode;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
+
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Objects;
 
 import com.BillSyncOrg.BillSync.exceptions.BillSyncClientException;
 
@@ -32,10 +31,11 @@ public class GlobalExceptionHandler {
    * @return a structured error response with HTTP 400 status
    */
   @ExceptionHandler(BillSyncClientException.class)
-  public ResponseEntity<Object> handleBillSyncException(BillSyncClientException ex) {
+  public ResponseEntity<Object> handleBillSyncClientException(BillSyncClientException ex) {
     Map<String, String> error = new HashMap<>();
     error.put("error", ex.getMessage());
-    return ResponseGenerator.builder().message(ex.getMessage()).status(ex.getHttpStatusCode()).build();
+    return ResponseGenerator.builder().message(ex.getMessage())
+      .status(ex.getHttpStatusCode()).build();
   }
 
   /**
@@ -48,7 +48,8 @@ public class GlobalExceptionHandler {
   public ResponseEntity<Object> handleBillSyncServerException(BillSyncServerException ex) {
     Map<String, String> error = new HashMap<>();
     error.put("error", ex.getMessage());
-    return ResponseGenerator.builder().message(ex.getMessage()).status(ex.getHttpStatusCode()).build();
+    return ResponseGenerator.builder().message(ex.getMessage())
+      .status(ex.getHttpStatusCode()).build();
   }
 
   /**
@@ -63,6 +64,7 @@ public class GlobalExceptionHandler {
     ex.getBindingResult().getFieldErrors().forEach(err ->
       errors.put(err.getField(), err.getDefaultMessage())
     );
-    return ResponseGenerator.builder().body(errors).message(errors.toString()).status(HttpStatusCodeEnum.BAD_REQUEST).build();
+    return ResponseGenerator.builder().body(errors).message(errors.toString())
+      .status(HttpStatusCodeEnum.BAD_REQUEST).build();
   }
 }
