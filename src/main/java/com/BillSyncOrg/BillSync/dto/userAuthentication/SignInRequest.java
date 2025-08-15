@@ -1,6 +1,6 @@
 package com.BillSyncOrg.BillSync.dto.userAuthentication;
 
-import com.BillSyncOrg.BillSync.util.ValidLoginIdentifier;
+import com.BillSyncOrg.BillSync.util.annotations.ValidLoginIdentifier;
 import jakarta.validation.constraints.NotBlank;
 
 /**

@@ -1,5 +1,6 @@
-package com.BillSyncOrg.BillSync.exceptions;
+package com.BillSyncOrg.BillSync.exceptions.clientExceptions;
 
+import com.BillSyncOrg.BillSync.exceptions.clientExceptions.BillSyncClientException;
 import com.BillSyncOrg.BillSync.util.HttpStatusCodeEnum;
 
 /**

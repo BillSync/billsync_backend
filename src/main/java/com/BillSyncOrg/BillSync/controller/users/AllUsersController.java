@@ -1,8 +1,8 @@
 package com.BillSyncOrg.BillSync.controller.users;
 
 import com.BillSyncOrg.BillSync.dto.userRecords.FindUserRequest;
-import com.BillSyncOrg.BillSync.exceptions.BillSyncClientException;
-import com.BillSyncOrg.BillSync.exceptions.BillSyncServerException;
+import com.BillSyncOrg.BillSync.exceptions.clientExceptions.BillSyncClientException;
+import com.BillSyncOrg.BillSync.exceptions.serverExceptions.BillSyncServerException;
 import com.BillSyncOrg.BillSync.model.User;
 import com.BillSyncOrg.BillSync.projection.allUsers.UserIDNameProjection;
 import com.BillSyncOrg.BillSync.repository.UserRepository;
