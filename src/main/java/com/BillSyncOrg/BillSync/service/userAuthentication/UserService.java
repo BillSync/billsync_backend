@@ -1,9 +1,9 @@
-package com.BillSyncOrg.BillSync.service;
+package com.BillSyncOrg.BillSync.service.userAuthentication;
 
 
 import com.BillSyncOrg.BillSync.context.RequestContext;
-import com.BillSyncOrg.BillSync.dto.SignInRequest;
-import com.BillSyncOrg.BillSync.dto.SignInResponse;
+import com.BillSyncOrg.BillSync.dto.userAuthentication.SignInRequest;
+import com.BillSyncOrg.BillSync.dto.userAuthentication.SignInResponse;
 import com.BillSyncOrg.BillSync.exceptions.*;
 import com.BillSyncOrg.BillSync.model.BlacklistedToken;
 import com.BillSyncOrg.BillSync.repository.BlacklistedTokenRepository;
@@ -14,7 +14,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
-import com.BillSyncOrg.BillSync.dto.SignupRequest;
+import com.BillSyncOrg.BillSync.dto.userAuthentication.SignupRequest;
 import com.BillSyncOrg.BillSync.model.User;
 import com.BillSyncOrg.BillSync.repository.UserRepository;
 
@@ -73,6 +73,7 @@ public class UserService {
       }
 
       User user = new User();
+      user.setName(request.getName());
       user.setEmail(request.getEmail());
       user.setPhoneNumber(request.getPhoneNumber());
       user.setPassword(passwordEncoder.encode(request.getPassword()));

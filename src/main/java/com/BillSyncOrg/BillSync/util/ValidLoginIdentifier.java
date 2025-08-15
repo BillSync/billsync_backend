@@ -1,6 +1,6 @@
 package com.BillSyncOrg.BillSync.util;
 
-import com.BillSyncOrg.BillSync.dto.SignInRequest;
+import com.BillSyncOrg.BillSync.dto.userAuthentication.SignInRequest;
 import com.BillSyncOrg.BillSync.validation.LoginIdentifierValidator;
 import jakarta.validation.Constraint;
 import jakarta.validation.Payload;

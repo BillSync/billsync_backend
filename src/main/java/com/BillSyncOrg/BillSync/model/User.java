@@ -40,6 +40,11 @@ public class User {
    */
   private String password;
 
+  /**
+   * The user's name.
+   */
+  private String name;
+
   // Getters and Setters
   public String getId() {
     return id;
@@ -73,4 +78,11 @@ public class User {
     this.password = password;
   }
 
+  public String getName() {
+    return name;
+  }
+
+  public void setName(String name) {
+    this.name = name;
+  }
 }
