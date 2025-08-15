@@ -1,4 +1,4 @@
-package com.BillSyncOrg.BillSync.dto;
+package com.BillSyncOrg.BillSync.dto.userAuthentication;
 
 /**
  * DTO representing the response returned after a successful login.

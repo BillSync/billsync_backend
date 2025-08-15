@@ -1,4 +1,4 @@
-package com.BillSyncOrg.BillSync.dto;
+package com.BillSyncOrg.BillSync.dto.userAuthentication;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Pattern;
@@ -33,6 +33,13 @@ public class SignupRequest {
   @NotBlank(message = "Email is required")
   @Email(message = "Email should be valid")
   private String email;
+
+  /**
+   * User's email address.
+   * Must be a valid email format and not empty.
+   */
+  @NotBlank(message = "Name is required")
+  private String name;
 
   /**
    * User's 10-digit phone number.
@@ -74,5 +81,13 @@ public class SignupRequest {
 
   public void setPassword(String password) {
     this.password = password;
+  }
+
+  public String getName() {
+    return name;
+  }
+
+  public void setName(String name) {
+    this.name = name;
   }
 }

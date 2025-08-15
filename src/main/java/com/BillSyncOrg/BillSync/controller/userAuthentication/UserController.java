@@ -1,21 +1,19 @@
-package com.BillSyncOrg.BillSync.controller;
+package com.BillSyncOrg.BillSync.controller.userAuthentication;
 
 import com.BillSyncOrg.BillSync.context.RequestContext;
-import com.BillSyncOrg.BillSync.dto.SignInRequest;
-import com.BillSyncOrg.BillSync.dto.SignInResponse;
-import com.BillSyncOrg.BillSync.dto.SignupRequest;
+import com.BillSyncOrg.BillSync.dto.userAuthentication.SignInRequest;
+import com.BillSyncOrg.BillSync.dto.userAuthentication.SignInResponse;
+import com.BillSyncOrg.BillSync.dto.userAuthentication.SignupRequest;
 import com.BillSyncOrg.BillSync.exceptions.BillSyncClientException;
 import com.BillSyncOrg.BillSync.exceptions.BillSyncServerException;
 import com.BillSyncOrg.BillSync.model.User;
-import com.BillSyncOrg.BillSync.service.UserService;
+import com.BillSyncOrg.BillSync.service.userAuthentication.UserService;
 import com.BillSyncOrg.BillSync.util.HttpStatusCodeEnum;
 import com.BillSyncOrg.BillSync.util.ResponseGenerator;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 
 /**
