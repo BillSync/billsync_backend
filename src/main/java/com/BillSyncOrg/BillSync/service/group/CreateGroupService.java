@@ -5,9 +5,7 @@ import com.BillSyncOrg.BillSync.exceptions.clientExceptions.BillSyncClientExcept
 import com.BillSyncOrg.BillSync.exceptions.serverExceptions.BillSyncServerException;
 import com.BillSyncOrg.BillSync.exceptions.clientExceptions.RecordNotFoundException;
 import com.BillSyncOrg.BillSync.model.Group;
-import com.BillSyncOrg.BillSync.model.User;
 import com.BillSyncOrg.BillSync.repository.GroupRepository;
-import com.BillSyncOrg.BillSync.repository.UserRepository;
 import com.BillSyncOrg.BillSync.service.userAuthentication.UserService;
 import com.BillSyncOrg.BillSync.util.HttpStatusCodeEnum;
 import org.springframework.beans.factory.annotation.Autowired;
