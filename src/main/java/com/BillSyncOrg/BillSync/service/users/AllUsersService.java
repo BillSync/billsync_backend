@@ -3,7 +3,7 @@ package com.BillSyncOrg.BillSync.service.users;
 import com.BillSyncOrg.BillSync.dto.userRecords.FindUserRequest;
 import com.BillSyncOrg.BillSync.exceptions.clientExceptions.BillSyncClientException;
 import com.BillSyncOrg.BillSync.exceptions.serverExceptions.BillSyncServerException;
-import com.BillSyncOrg.BillSync.exceptions.serverExceptions.RecordNotFoundException;
+import com.BillSyncOrg.BillSync.exceptions.clientExceptions.RecordNotFoundException;
 import com.BillSyncOrg.BillSync.model.User;
 import com.BillSyncOrg.BillSync.projection.allUsers.UserIDNameProjection;
 import com.BillSyncOrg.BillSync.repository.UserRepository;

@@ -1,5 +1,6 @@
-package com.BillSyncOrg.BillSync.exceptions.serverExceptions;
+package com.BillSyncOrg.BillSync.exceptions.clientExceptions;
 
+import com.BillSyncOrg.BillSync.exceptions.clientExceptions.BillSyncClientException;
 import com.BillSyncOrg.BillSync.exceptions.serverExceptions.BillSyncServerException;
 import com.BillSyncOrg.BillSync.util.HttpStatusCodeEnum;
 
@@ -10,7 +11,7 @@ import com.BillSyncOrg.BillSync.util.HttpStatusCodeEnum;
  * instead of using generic {@link BillSyncServerException}.
  * </p>
  */
-public class RecordNotFoundException extends BillSyncServerException {
+public class RecordNotFoundException extends BillSyncClientException {
 
   /**
    * {@inheritDoc}

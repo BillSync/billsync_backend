@@ -1,13 +1,13 @@
 package com.BillSyncOrg.BillSync.dto.groupRecords;
 
-import com.BillSyncOrg.BillSync.controller.groups.CreateGroupController;
+import com.BillSyncOrg.BillSync.controller.groups.GroupController;
 import jakarta.validation.constraints.NotBlank;
 import java.util.List;
 
 /**
  * Data Transfer Object (DTO) used to capture the input data for creating a new group.
  * <p>
- * The DTO is used in the {@link CreateGroupController#createGroup(CreateGroupRequest)}
+ * The DTO is used in the {@link GroupController#createGroup(CreateGroupRequest)}
  * endpoint.
  * </p>
  *

@@ -3,13 +3,18 @@ package com.BillSyncOrg.BillSync.service.group;
 import com.BillSyncOrg.BillSync.dto.groupRecords.CreateGroupRequest;
 import com.BillSyncOrg.BillSync.exceptions.clientExceptions.BillSyncClientException;
 import com.BillSyncOrg.BillSync.exceptions.serverExceptions.BillSyncServerException;
+import com.BillSyncOrg.BillSync.exceptions.clientExceptions.RecordNotFoundException;
 import com.BillSyncOrg.BillSync.model.Group;
+import com.BillSyncOrg.BillSync.model.User;
 import com.BillSyncOrg.BillSync.repository.GroupRepository;
+import com.BillSyncOrg.BillSync.repository.UserRepository;
+import com.BillSyncOrg.BillSync.service.userAuthentication.UserService;
 import com.BillSyncOrg.BillSync.util.HttpStatusCodeEnum;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DuplicateKeyException;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -29,10 +34,12 @@ import java.util.Map;
 public class CreateGroupService {
 
   private final GroupRepository groupRepository;
+  private final UserService userService;
 
   @Autowired
-  public CreateGroupService(GroupRepository groupRepository) {
+  public CreateGroupService(GroupRepository groupRepository, UserService userService) {
     this.groupRepository = groupRepository;
+    this.userService = userService;
   }
 
   /**
@@ -46,12 +53,20 @@ public class CreateGroupService {
   public Group createGroup(CreateGroupRequest createGroupRequest) throws BillSyncServerException,
     BillSyncClientException {
     try {
+      List<String> userIds = createGroupRequest.getUserIds();
+
+      userService.checkAllUsersExists(userIds);
+
       Group group = new Group();
       group.setGroupName(createGroupRequest.getGroupName());
-      group.setUserId(createGroupRequest.getUserIds());
+      group.setUserId(userIds);
       group.setDebts(Map.of());
+
       return groupRepository.save(group);
-    } catch (DuplicateKeyException e) {
+    } catch (RecordNotFoundException e) {
+      throw new BillSyncClientException(e.getMessage(), e.getHttpStatusCode());
+    }
+    catch (DuplicateKeyException e) {
       throw new BillSyncClientException(
         "Group name already exists, please provide unique name!",
         e,
