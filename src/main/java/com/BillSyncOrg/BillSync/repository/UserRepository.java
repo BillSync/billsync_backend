@@ -69,4 +69,12 @@ public interface UserRepository extends MongoRepository<User, String> {
   @Query(value = "{ $or: [ { 'email': ?0 }, { 'phoneNumber': ?0 } ] }",
     fields = "{ '_id': 1, 'name': 1 }")
   Optional<UserIDNameProjection> findByEmailOrPhone(String value);
+
+  /**
+   * Finds all users whose IDs are in the given list.
+   *
+   * @param ids list of user IDs
+   * @return list of matching users
+   */
+  List<User> findByIdIn(List<String> ids);
 }

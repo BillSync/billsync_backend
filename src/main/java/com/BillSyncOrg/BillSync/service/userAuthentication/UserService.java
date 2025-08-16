@@ -4,7 +4,12 @@ package com.BillSyncOrg.BillSync.service.userAuthentication;
 import com.BillSyncOrg.BillSync.context.RequestContext;
 import com.BillSyncOrg.BillSync.dto.userAuthentication.SignInRequest;
 import com.BillSyncOrg.BillSync.dto.userAuthentication.SignInResponse;
-import com.BillSyncOrg.BillSync.exceptions.*;
+import com.BillSyncOrg.BillSync.exceptions.clientExceptions.BillSyncClientException;
+import com.BillSyncOrg.BillSync.exceptions.clientExceptions.RecordNotFoundException;
+import com.BillSyncOrg.BillSync.exceptions.clientExceptions.UserSignInClientException;
+import com.BillSyncOrg.BillSync.exceptions.clientExceptions.UserSignupClientException;
+import com.BillSyncOrg.BillSync.exceptions.serverExceptions.BillSyncServerException;
+import com.BillSyncOrg.BillSync.exceptions.serverExceptions.JWTException;
 import com.BillSyncOrg.BillSync.model.BlacklistedToken;
 import com.BillSyncOrg.BillSync.repository.BlacklistedTokenRepository;
 import com.BillSyncOrg.BillSync.util.HttpStatusCodeEnum;
@@ -17,6 +22,8 @@ import org.springframework.stereotype.Service;
 import com.BillSyncOrg.BillSync.dto.userAuthentication.SignupRequest;
 import com.BillSyncOrg.BillSync.model.User;
 import com.BillSyncOrg.BillSync.repository.UserRepository;
+
+import java.util.List;
 
 /**
  * Service class that handles business logic related to user registration.
@@ -144,5 +151,38 @@ public class UserService {
     } catch (JWTException e) {
       throw new BillSyncServerException(e.getMessage(), e.getHttpStatusCode());
     }
+  }
+
+  /**
+   * Validates that all provided user IDs exist in the system.
+   * <p>
+   * This method queries the {@link UserRepository} to check if each user ID in the provided list
+   * corresponds to an existing {@link User} record in the database. If one or more user IDs are not found,
+   * a {@link RecordNotFoundException} is thrown.
+   * </p>
+   *
+   * <p><b>Validation rules:</b></p>
+   * <ul>
+   *   <li>If {@code userIds} is {@code null} or empty, the method returns {@code true} without validation.</li>
+   *   <li>If all user IDs exist, the method returns {@code true}.</li>
+   *   <li>If any user ID does not exist, a {@link RecordNotFoundException} is thrown with
+   *   {@link HttpStatusCodeEnum#BAD_REQUEST}.</li>
+   * </ul>
+   *
+   * @param userIds the list of user IDs to validate; may be {@code null} or empty
+   * @return {@code true} if all provided user IDs exist or if the list is {@code null}/empty
+   * @throws RecordNotFoundException if one or more user IDs do not exist in the database
+   */
+  public boolean checkAllUsersExists (List<String> userIds) throws RecordNotFoundException {
+    if (userIds !=null && !userIds.isEmpty()) {
+      List<User> existingUsers = userRepository.findByIdIn(userIds);
+
+      if(existingUsers.size() != userIds.size()) {
+        throw new RecordNotFoundException("One or more users do not exist",
+          HttpStatusCodeEnum.BAD_REQUEST);
+      }
+      return true;
+    }
+    return false;
   }
 }

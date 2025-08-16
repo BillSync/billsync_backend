@@ -1,6 +1,6 @@
 package com.BillSyncOrg.BillSync.util;
 
-import com.BillSyncOrg.BillSync.exceptions.BillSyncServerException;
+import com.BillSyncOrg.BillSync.exceptions.serverExceptions.BillSyncServerException;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.RestControllerAdvice;
 import java.util.HashMap;
 import java.util.Map;
 
-import com.BillSyncOrg.BillSync.exceptions.BillSyncClientException;
+import com.BillSyncOrg.BillSync.exceptions.clientExceptions.BillSyncClientException;
 
 /**
  * Global exception handler for the entire application.

@@ -1,4 +1,4 @@
-package com.BillSyncOrg.BillSync.util;
+package com.BillSyncOrg.BillSync.util.annotations;
 
 import com.BillSyncOrg.BillSync.dto.userAuthentication.SignInRequest;
 import com.BillSyncOrg.BillSync.validation.LoginIdentifierValidator;
