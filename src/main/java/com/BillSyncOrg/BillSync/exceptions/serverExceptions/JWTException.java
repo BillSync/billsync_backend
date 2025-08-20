@@ -1,7 +1,6 @@
 package com.BillSyncOrg.BillSync.exceptions.serverExceptions;
 
-import com.BillSyncOrg.BillSync.exceptions.serverExceptions.BillSyncServerException;
-import com.BillSyncOrg.BillSync.util.HttpStatusCodeEnum;
+import com.BillSyncOrg.BillSync.util.enums.HttpStatusCodeEnum;
 
 /**
  * Custom exception class thrown during jwt failures.

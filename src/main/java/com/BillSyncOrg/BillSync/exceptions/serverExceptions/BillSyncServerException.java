@@ -1,6 +1,6 @@
 package com.BillSyncOrg.BillSync.exceptions.serverExceptions;
 
-import com.BillSyncOrg.BillSync.util.HttpStatusCodeEnum;
+import com.BillSyncOrg.BillSync.util.enums.HttpStatusCodeEnum;
 
 public class BillSyncServerException extends Exception{
 

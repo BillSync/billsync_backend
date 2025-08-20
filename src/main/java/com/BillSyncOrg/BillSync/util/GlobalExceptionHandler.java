@@ -1,6 +1,7 @@
 package com.BillSyncOrg.BillSync.util;
 
 import com.BillSyncOrg.BillSync.exceptions.serverExceptions.BillSyncServerException;
+import com.BillSyncOrg.BillSync.util.enums.HttpStatusCodeEnum;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;

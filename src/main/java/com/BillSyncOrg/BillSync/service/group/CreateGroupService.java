@@ -7,7 +7,7 @@ import com.BillSyncOrg.BillSync.exceptions.clientExceptions.RecordNotFoundExcept
 import com.BillSyncOrg.BillSync.model.Group;
 import com.BillSyncOrg.BillSync.repository.GroupRepository;
 import com.BillSyncOrg.BillSync.service.userAuthentication.UserService;
-import com.BillSyncOrg.BillSync.util.HttpStatusCodeEnum;
+import com.BillSyncOrg.BillSync.util.enums.HttpStatusCodeEnum;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DuplicateKeyException;
 import org.springframework.stereotype.Service;

@@ -8,7 +8,7 @@ import com.BillSyncOrg.BillSync.exceptions.clientExceptions.BillSyncClientExcept
 import com.BillSyncOrg.BillSync.exceptions.serverExceptions.BillSyncServerException;
 import com.BillSyncOrg.BillSync.model.User;
 import com.BillSyncOrg.BillSync.service.userAuthentication.UserService;
-import com.BillSyncOrg.BillSync.util.HttpStatusCodeEnum;
+import com.BillSyncOrg.BillSync.util.enums.HttpStatusCodeEnum;
 import com.BillSyncOrg.BillSync.util.ResponseGenerator;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.validation.Valid;

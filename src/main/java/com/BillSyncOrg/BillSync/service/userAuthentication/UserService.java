@@ -12,7 +12,7 @@ import com.BillSyncOrg.BillSync.exceptions.serverExceptions.BillSyncServerExcept
 import com.BillSyncOrg.BillSync.exceptions.serverExceptions.JWTException;
 import com.BillSyncOrg.BillSync.model.BlacklistedToken;
 import com.BillSyncOrg.BillSync.repository.BlacklistedTokenRepository;
-import com.BillSyncOrg.BillSync.util.HttpStatusCodeEnum;
+import com.BillSyncOrg.BillSync.util.enums.HttpStatusCodeEnum;
 import com.BillSyncOrg.BillSync.util.jwt.JwtUtil;
 import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;

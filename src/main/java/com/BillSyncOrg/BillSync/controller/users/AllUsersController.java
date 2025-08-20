@@ -7,7 +7,7 @@ import com.BillSyncOrg.BillSync.model.User;
 import com.BillSyncOrg.BillSync.projection.allUsers.UserIDNameProjection;
 import com.BillSyncOrg.BillSync.repository.UserRepository;
 import com.BillSyncOrg.BillSync.service.users.AllUsersService;
-import com.BillSyncOrg.BillSync.util.HttpStatusCodeEnum;
+import com.BillSyncOrg.BillSync.util.enums.HttpStatusCodeEnum;
 import com.BillSyncOrg.BillSync.util.ResponseGenerator;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;

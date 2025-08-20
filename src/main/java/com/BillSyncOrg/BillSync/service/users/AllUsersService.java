@@ -7,7 +7,7 @@ import com.BillSyncOrg.BillSync.exceptions.clientExceptions.RecordNotFoundExcept
 import com.BillSyncOrg.BillSync.model.User;
 import com.BillSyncOrg.BillSync.projection.allUsers.UserIDNameProjection;
 import com.BillSyncOrg.BillSync.repository.UserRepository;
-import com.BillSyncOrg.BillSync.util.HttpStatusCodeEnum;
+import com.BillSyncOrg.BillSync.util.enums.HttpStatusCodeEnum;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
