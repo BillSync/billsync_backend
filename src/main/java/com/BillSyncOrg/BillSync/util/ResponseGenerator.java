@@ -1,10 +1,9 @@
 package com.BillSyncOrg.BillSync.util;
 
+import com.BillSyncOrg.BillSync.util.enums.HttpStatusCodeEnum;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.HttpStatusCode;
 import org.springframework.http.ResponseEntity;
 
-import java.net.http.HttpHeaders;
 import java.util.LinkedHashMap;
 import java.util.Map;
 

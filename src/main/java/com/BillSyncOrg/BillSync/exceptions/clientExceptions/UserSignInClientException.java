@@ -1,7 +1,6 @@
 package com.BillSyncOrg.BillSync.exceptions.clientExceptions;
 
-import com.BillSyncOrg.BillSync.exceptions.clientExceptions.BillSyncClientException;
-import com.BillSyncOrg.BillSync.util.HttpStatusCodeEnum;
+import com.BillSyncOrg.BillSync.util.enums.HttpStatusCodeEnum;
 
 /**
  * Custom exception class thrown during user login failures.

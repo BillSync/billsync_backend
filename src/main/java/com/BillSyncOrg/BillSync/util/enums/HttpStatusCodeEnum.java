@@ -1,4 +1,4 @@
-package com.BillSyncOrg.BillSync.util;
+package com.BillSyncOrg.BillSync.util.enums;
 
 /**
  * Enum representing standard HTTP status codes ranging from 200 to 503.

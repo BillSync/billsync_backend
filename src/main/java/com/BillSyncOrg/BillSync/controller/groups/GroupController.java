@@ -7,7 +7,7 @@ import com.BillSyncOrg.BillSync.exceptions.serverExceptions.BillSyncServerExcept
 import com.BillSyncOrg.BillSync.model.Group;
 import com.BillSyncOrg.BillSync.service.group.CreateGroupService;
 import com.BillSyncOrg.BillSync.service.group.UpdateGroupService;
-import com.BillSyncOrg.BillSync.util.HttpStatusCodeEnum;
+import com.BillSyncOrg.BillSync.util.enums.HttpStatusCodeEnum;
 import com.BillSyncOrg.BillSync.util.ResponseGenerator;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;

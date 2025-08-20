@@ -1,7 +1,7 @@
 package com.BillSyncOrg.BillSync.util.jwt;
 
 import com.BillSyncOrg.BillSync.exceptions.serverExceptions.JWTException;
-import com.BillSyncOrg.BillSync.util.HttpStatusCodeEnum;
+import com.BillSyncOrg.BillSync.util.enums.HttpStatusCodeEnum;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
