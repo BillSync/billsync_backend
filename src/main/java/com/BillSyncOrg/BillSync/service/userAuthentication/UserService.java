@@ -118,6 +118,7 @@ public class UserService {
       }
 
       String token = jwtUtil.generateToken(user.getId());
+      user.setCurrentToken(token);
       userRepository.save(user); // Update user with new token
 
       return new SignInResponse(token);
