@@ -45,6 +45,8 @@ public class User {
    */
   private String name;
 
+  private String currentToken;
+
   // Getters and Setters
   public String getId() {
     return id;
@@ -84,5 +86,13 @@ public class User {
 
   public void setName(String name) {
     this.name = name;
+  }
+
+  public String getCurrentToken() {
+    return currentToken;
+  }
+
+  public void setCurrentToken(String currentToken) {
+    this.currentToken = currentToken;
   }
 }

@@ -15,9 +15,12 @@ public class SecurityConfig {
 
   private final JwtAuthenticationFilter jwtAuthenticationFilter;
 
+  private final CorsConfig corsConfig;
+
   @Autowired
-  public SecurityConfig(JwtAuthenticationFilter jwtAuthenticationFilter) {
+  public SecurityConfig(JwtAuthenticationFilter jwtAuthenticationFilter, CorsConfig corsConfig) {
     this.jwtAuthenticationFilter = jwtAuthenticationFilter;
+    this.corsConfig = corsConfig;
   }
 
   /**
@@ -31,6 +34,7 @@ public class SecurityConfig {
   public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
     http
       .csrf(csrf -> csrf.disable()) // Disable CSRF for testing POST endpoints like signup
+      .cors(cors -> cors.configurationSource(corsConfig.corsConfigurationSource()))
       .authorizeHttpRequests(auth -> auth
         .requestMatchers("/api/users/signup", "/api/users/login").permitAll()
         .anyRequest().authenticated()
